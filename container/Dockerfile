@@ -1,12 +1,5 @@
 FROM debian:stable-slim
 
-# Keyboard and layout can be defined at build time...
-ARG buildKeyboard=ergodox_ez
-ARG buildLayout=default
-# ...or at runtime
-ENV keyboard=$buildKeyboard
-ENV layout=$buildLayout
-
 # Install QMK prerequisites
 RUN apt-get update && apt-get install -y --no-install-recommends \
     ca-certificates \
@@ -33,6 +26,13 @@ RUN mkdir /output
 
 # Add our run script
 COPY run.sh /
+
+# Keyboard and layout can be defined at build time...
+ARG buildKeyboard=ergodox_ez
+ARG buildLayout=default
+# ...or at runtime
+ENV keyboard=$buildKeyboard
+ENV layout=$buildLayout
 
 # Command to use when running this container
 WORKDIR /qmk_firmware
